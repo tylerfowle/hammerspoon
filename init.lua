@@ -1,11 +1,11 @@
--- config
+-- CONFIG
 hs.application.enableSpotlightForNameSearches(true)
 spaces = require("hs._asm.undocumented.spaces")
 
 
 hs.console.clearConsole()
 
--- config spaces
+-- CONFIG SPACES
 local originSpacesCount = spaces.count()
 print (originSpacesCount)
 
@@ -13,7 +13,7 @@ print (originSpacesCount)
 
 
 
--- auto reload start
+-- AUTO RELOAD start
 function reloadConfig(files)
   doReload = false
   for _,file in pairs(files) do
@@ -31,7 +31,7 @@ hs.alert.show("Config loaded")
 
 
 
--- apply layout function
+-- APPLY LAYOUT FUNCTION
 function applyWindowLayout()
 
   local numberOfScreens = #hs.screen.allScreens()
@@ -45,7 +45,7 @@ function applyWindowLayout()
 end
 
 
--- work layout
+-- WORK LAYOUT
 function applyWorkLayout()
 
   local laptopScreen = hs.screen.allScreens()[1]:name()
@@ -65,7 +65,7 @@ function applyWorkLayout()
 end
 
 
--- mobile window layout
+-- MOBILE LAYOUT
 function applyMobileLayout()
 
   local laptopScreen = hs.screen.allScreens()[1]:name()
@@ -82,7 +82,7 @@ function applyMobileLayout()
 end
 
 
-
+-- ACTIVATE MISSION CONTROL
 function activateMissionControl()
 
   local nextSpaceDownEvent = hs.eventtap.event.newKeyEvent({"cmd,alt,ctrl,shift"}, "B", true)
@@ -98,7 +98,7 @@ end
 
 
 
-
+-- MOVE ONE SPACE
 function moveOneSpace(direction)
   local nextSpaceDownEvent = hs.eventtap.event.newKeyEvent({"alt"}, direction, true)
   nextSpaceDownEvent:post()
@@ -111,7 +111,7 @@ end
 
 
 
-
+-- TEST FOR EXTERNAL MONITOR
 function hasExternalMonitor()
   for _, screen in pairs(hs.screen.allScreens()) do
     if screen:name() == "Thunderbolt Display" then
@@ -122,7 +122,7 @@ function hasExternalMonitor()
 end
 
 
-
+-- MOVE WINDOW ONE SPACE
 function moveWindowOneSpace(direction)
   local mouseOrigin = hs.mouse.getAbsolutePosition()
   local win = hs.window.focusedWindow()
@@ -153,25 +153,13 @@ end
 
 
 
-function createCorrectSpaces()
-  local modifiedSpacesCount =  spaces.count()
-  for i=1, (originSpacesCount - modifiedSpacesCount), 1 do
-    print(i)
-    spaces.createSpace()
-  end
-  originSpacesCount = spaces.count()
-end
 
-
-
-
-
--- alt+tab window switcher
+-- alt+tab WINDOW SWITCHER
 hs.window.switcher.ui.textColor = {0.9,0.9,0.9}
 hs.window.switcher.ui.fontName = 'Hack'
-hs.window.switcher.ui.textSize = 14 -- in screen points
+hs.window.switcher.ui.textSize = 10 -- in screen points
 hs.window.switcher.ui.highlightColor = {0.8,0.5,0,0.8}  -- highlight color for the selected window
-hs.window.switcher.ui.backgroundColor = {0.2,0.2,0.2,1}
+hs.window.switcher.ui.backgroundColor = {0.2,0.2,0.2,0}
 hs.window.switcher.ui.onlyActiveApplication = false -- only show windows of the active application
 hs.window.switcher.ui.showTitles = false  -- show window titles
 hs.window.switcher.ui.titleBackgroundColor = {0,0,0}
@@ -187,45 +175,89 @@ switcher_space = hs.window.switcher.new(hs.window.filter.new():setCurrentSpace(t
 switcher_browsers = hs.window.switcher.new{'Safari','Google Chrome'} -- specialized switcher for your dozens of browser windows :)
 
 -- alternatively, call .nextWindow() or .previousWindow() directly (same as hs.window.switcher.new():next())
-hs.hotkey.bind('alt','tab','Next window',hs.window.switcher.nextWindow)
+hs.hotkey.bind('ctrl','tab','Next window',hs.window.switcher.nextWindow)
 -- you can also bind to `repeatFn` for faster traversing
-hs.hotkey.bind('alt-shift','tab','Prev window',hs.window.switcher.previousWindow,nil,hs.window.switcher.previousWindow)
+hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindow,nil,hs.window.switcher.previousWindow)
 
 
 
--- aliases
-local mash 	 = {"cmd", "alt", "ctrl"}
+-- ALIASES
+local hyper 	 = {"cmd", "alt", "ctrl"}
 
--- hotkeys
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "Y", function()
-  applyWindowLayout()
+-- HOTKEYS
+hs.hotkey.bind(hyper, "y", function()
+  applywindowlayout()
 end)
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "U", function()
-  moveOneSpace("1")
+hs.hotkey.bind(hyper, "u", function()
+  moveonespace("1")
 end)
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "O", function()
-  moveOneSpace("2")
+hs.hotkey.bind(hyper, "o", function()
+  moveonespace("2")
 end)
 
-hs.hotkey.bind(mash, "i", function()
+hs.hotkey.bind(hyper, "i", function()
   print("creating new space")
-  spaces.createSpace()
+  spaces.createspace()
 end)
 
-hs.hotkey.bind(mash, "h", function()
-  moveWindowOneSpace("1")
+hs.hotkey.bind(hyper, "h", function()
+  movewindowonespace("1")
 end)
 
-hs.hotkey.bind(mash, "l", function()
+hs.hotkey.bind(hyper, "l", function()
   moveWindowOneSpace("2")
 end)
 
--- watchers
+-- WATCHERS
+-- change window layout on monitor configuration change
 -- local monitorWatcher = hs.screen.watcher.new(applyWindowLayout)
-local monitorWatcher = hs.screen.watcher.new(createCorrectSpaces)
-monitorWatcher:start()
+-- monitorWatcher:start()
 
 
 
+
+
+-- DISPLAY FOCUS SWITCHING --
+
+--One hotkey should just suffice for dual-display setups as it will naturally
+--cycle through both.
+--A second hotkey to reverse the direction of the focus-shift would be handy
+--for setups with 3 or more displays.
+
+--Bring focus to next display/screen
+hs.hotkey.bind({"cmd","ctrl","alt","shift"}, "`", function ()
+  focusScreen(hs.window.focusedWindow():screen():next())
+end)
+
+--Bring focus to previous display/screen
+hs.hotkey.bind({"alt", "shift"}, "`", function()
+  focusScreen(hs.window.focusedWindow():screen():previous())
+end)
+
+--Predicate that checks if a window belongs to a screen
+function isInScreen(screen, win)
+  return win:screen() == screen
+end
+
+-- Brings focus to the scren by setting focus on the front-most application in it.
+-- Also move the mouse cursor to the center of the screen. This is because
+-- Mission Control gestures & keyboard shortcuts are anchored, oddly, on where the
+-- mouse is focused.
+function focusScreen(screen)
+  --Get windows within screen, ordered from front to back.
+  --If no windows exist, bring focus to desktop. Otherwise, set focus on
+  --front-most application window.
+  local windows = hs.fnutils.filter(
+      hs.window.orderedWindows(),
+      hs.fnutils.partial(isInScreen, screen))
+  local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
+  windowToFocus:focus()
+
+  -- Move mouse to center of screen
+  local pt = geometry.rectMidPoint(screen:fullFrame())
+  mouse.setAbsolutePosition(pt)
+end
+
+-- END DISPLAY FOCUS SWITCHING --
