@@ -1,6 +1,6 @@
 -- CONFIG
 hs.application.enableSpotlightForNameSearches(true)
-hs.window.animationDuration = 0
+-- hs.window.animationDuration = 0
 
 -- REQUIRE
 spaces = require("hs._asm.undocumented.spaces")
@@ -238,3 +238,21 @@ defaultDevice:watcherCallback(audioWatch);
 defaultDevice:watcherStart();
 
 print(defaultDevice)
+
+
+
+
+
+
+-- Move Mouse to center of next Monitor
+hs.hotkey.bind(hypershift, 'n', function()
+  local screen = hs.mouse.getCurrentScreen()
+  local nextScreen = screen:next()
+  local rect = nextScreen:fullFrame()
+  local center = hs.geometry.rectMidPoint(rect)
+
+  -- hs.mouse.setRelativePosition(center, nextScreen)
+  hs.mouse.setAbsolutePosition(center)
+  hs.mouse.setRelativePosition(center)
+  hs.eventtap.leftClick(center)
+end)
