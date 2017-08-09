@@ -1,5 +1,8 @@
 -- CONFIG
 hs.application.enableSpotlightForNameSearches(true)
+hs.window.animationDuration = 0
+
+-- REQUIRE
 spaces = require("hs._asm.undocumented.spaces")
 
 
@@ -183,30 +186,31 @@ hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindo
 
 -- ALIASES
 local hyper 	 = {"cmd", "alt", "ctrl"}
+local hypershift = {"cmd", "alt", "ctrl", "shift"}
 
 -- HOTKEYS
-hs.hotkey.bind(hyper, "y", function()
-  applywindowlayout()
+hs.hotkey.bind(hypershift, "y", function()
+  applyWindowLayout()
 end)
 
-hs.hotkey.bind(hyper, "u", function()
-  moveonespace("1")
+hs.hotkey.bind(hypershift, "u", function()
+  moveOneSpace("1")
 end)
 
-hs.hotkey.bind(hyper, "o", function()
-  moveonespace("2")
+hs.hotkey.bind(hypershift, "o", function()
+  moveOneSpace("2")
 end)
 
-hs.hotkey.bind(hyper, "i", function()
+hs.hotkey.bind(hypershift, "i", function()
   print("creating new space")
-  spaces.createspace()
+  spaces.createSpace()
 end)
 
-hs.hotkey.bind(hyper, "h", function()
-  movewindowonespace("1")
+hs.hotkey.bind(hypershift, "h", function()
+  moveWindowOneSpace("1")
 end)
 
-hs.hotkey.bind(hyper, "l", function()
+hs.hotkey.bind(hypershift, "l", function()
   moveWindowOneSpace("2")
 end)
 
@@ -218,46 +222,19 @@ end)
 
 
 
+-- Mute on jack in/out
+function audioWatch(uid, eventName, eventScope, channelIdx)
+  if eventName == 'jack' then
+    hs.alert.show("Audio Changed. Muting.")
+    hs.audiodevice.defaultOutputDevice():setVolume(0)
+  end
 
--- DISPLAY FOCUS SWITCHING --
-
---One hotkey should just suffice for dual-display setups as it will naturally
---cycle through both.
---A second hotkey to reverse the direction of the focus-shift would be handy
---for setups with 3 or more displays.
-
---Bring focus to next display/screen
-hs.hotkey.bind({"cmd","ctrl","alt","shift"}, "`", function ()
-  focusScreen(hs.window.focusedWindow():screen():next())
-end)
-
---Bring focus to previous display/screen
-hs.hotkey.bind({"alt", "shift"}, "`", function()
-  focusScreen(hs.window.focusedWindow():screen():previous())
-end)
-
---Predicate that checks if a window belongs to a screen
-function isInScreen(screen, win)
-  return win:screen() == screen
 end
 
--- Brings focus to the scren by setting focus on the front-most application in it.
--- Also move the mouse cursor to the center of the screen. This is because
--- Mission Control gestures & keyboard shortcuts are anchored, oddly, on where the
--- mouse is focused.
-function focusScreen(screen)
-  --Get windows within screen, ordered from front to back.
-  --If no windows exist, bring focus to desktop. Otherwise, set focus on
-  --front-most application window.
-  local windows = hs.fnutils.filter(
-      hs.window.orderedWindows(),
-      hs.fnutils.partial(isInScreen, screen))
-  local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
-  windowToFocus:focus()
 
-  -- Move mouse to center of screen
-  local pt = geometry.rectMidPoint(screen:fullFrame())
-  mouse.setAbsolutePosition(pt)
-end
+-- Watch device; mute when headphones unplugged.
+local defaultDevice = hs.audiodevice.defaultOutputDevice()
+defaultDevice:watcherCallback(audioWatch);
+defaultDevice:watcherStart();
 
--- END DISPLAY FOCUS SWITCHING --
+print(defaultDevice)
