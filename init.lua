@@ -202,7 +202,7 @@ hs.hotkey.bind(hypershift, "o", function()
 end)
 
 hs.hotkey.bind(hypershift, "i", function()
-  print("creating new space")
+  hs.alert.show("creating new space")
   spaces.createSpace()
 end)
 
@@ -239,20 +239,3 @@ defaultDevice:watcherStart();
 
 print(defaultDevice)
 
-
-
-
-
-
--- Move Mouse to center of next Monitor
-hs.hotkey.bind(hypershift, 'n', function()
-  local screen = hs.mouse.getCurrentScreen()
-  local nextScreen = screen:next()
-  local rect = nextScreen:fullFrame()
-  local center = hs.geometry.rectMidPoint(rect)
-
-  -- hs.mouse.setRelativePosition(center, nextScreen)
-  hs.mouse.setAbsolutePosition(center)
-  hs.mouse.setRelativePosition(center)
-  hs.eventtap.leftClick(center)
-end)
