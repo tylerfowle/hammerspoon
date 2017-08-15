@@ -296,13 +296,13 @@ function updateCrosshairs()
   -- draw crosshair x axis
   crosshairx:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
   crosshairx:setFill(false)
-  crosshairx:setStrokeWidth(5)
+  crosshairx:setStrokeWidth(1)
   crosshairx:show()
 
   -- draw crosshair y axis
   crosshairy:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
   crosshairy:setFill(false)
-  crosshairy:setStrokeWidth(5)
+  crosshairy:setStrokeWidth(1)
   crosshairy:show()
 
 end
