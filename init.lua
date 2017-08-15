@@ -5,24 +5,29 @@ hs.window.setShadows(false)
 hs.hints.fontName           = "Hack"
 hs.hints.fontSize           = 22
 -- hs.hints.showTitleThresh    = 0
-hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'J', 'K', 'L', 'Q', 'W', 'E', 'R', 'Z', 'X', 'C' }
+-- hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'J', 'K', 'L', 'Q', 'W', 'E', 'R', 'Z', 'X', 'C' }
+hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'G', 'Q', 'W', 'E', 'R', 'T', 'Z', 'X', 'C', 'V', 'B' }
 
 -- REQUIRES
+---------------------------------------------------------------------------
 spaces = require("hs._asm.undocumented.spaces")
 
 hs.console.clearConsole()
 
 -- CONFIG SPACES
+---------------------------------------------------------------------------
 local originSpacesCount = spaces.count()
 print (originSpacesCount)
 
 
 -- ALIASES
+---------------------------------------------------------------------------
 local hyper 	 = {"cmd", "alt", "ctrl"}
 local hypershift = {"cmd", "alt", "ctrl", "shift"}
 
 
 -- AUTO RELOAD start
+---------------------------------------------------------------------------
 function reloadConfig(files)
   doReload = false
   for _,file in pairs(files) do
@@ -41,6 +46,7 @@ hs.alert.show("Config loaded")
 
 
 -- APPLY LAYOUT FUNCTION
+---------------------------------------------------------------------------
 function applyWindowLayout()
 
   local numberOfScreens = #hs.screen.allScreens()
@@ -55,6 +61,7 @@ end
 
 
 -- WORK LAYOUT
+---------------------------------------------------------------------------
 function applyWorkLayout()
 
   local laptopScreen = hs.screen.allScreens()[1]:name()
@@ -75,6 +82,7 @@ end
 
 
 -- MOBILE LAYOUT
+---------------------------------------------------------------------------
 function applyMobileLayout()
 
   local laptopScreen = hs.screen.allScreens()[1]:name()
@@ -92,6 +100,7 @@ end
 
 
 -- ACTIVATE MISSION CONTROL
+---------------------------------------------------------------------------
 function activateMissionControl()
 
   local nextSpaceDownEvent = hs.eventtap.event.newKeyEvent({"cmd,alt,ctrl,shift"}, "B", true)
@@ -108,6 +117,7 @@ end
 
 
 -- MOVE ONE SPACE
+---------------------------------------------------------------------------
 function moveOneSpace(direction)
   local nextSpaceDownEvent = hs.eventtap.event.newKeyEvent({"alt"}, direction, true)
   nextSpaceDownEvent:post()
@@ -121,6 +131,7 @@ end
 
 
 -- TEST FOR EXTERNAL MONITOR
+---------------------------------------------------------------------------
 function hasExternalMonitor()
   for _, screen in pairs(hs.screen.allScreens()) do
     if screen:name() == "Thunderbolt Display" then
@@ -132,6 +143,7 @@ end
 
 
 -- MOVE WINDOW ONE SPACE
+---------------------------------------------------------------------------
 function moveWindowOneSpace(direction)
   local mouseOrigin = hs.mouse.getAbsolutePosition()
   local win = hs.window.focusedWindow()
@@ -164,6 +176,7 @@ end
 
 
 -- alt+tab WINDOW SWITCHER
+---------------------------------------------------------------------------
 hs.window.switcher.ui.textColor = {0.9,0.9,0.9}
 hs.window.switcher.ui.fontName = 'Hack'
 hs.window.switcher.ui.textSize = 10 -- in screen points
@@ -192,38 +205,13 @@ hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindo
 
 
 
--- HOTKEYS
-hs.hotkey.bind(hypershift, "y", function()
-  applyWindowLayout()
-end)
 
-hs.hotkey.bind(hypershift, "u", function()
-  moveOneSpace("1")
-end)
-
-hs.hotkey.bind(hypershift, "o", function()
-  moveOneSpace("2")
-end)
-
-hs.hotkey.bind(hypershift, "i", function()
-  hs.alert.show("creating new space")
-  spaces.createSpace()
-end)
-
-hs.hotkey.bind(hypershift, "h", function()
-  moveWindowOneSpace("1")
-end)
-
-hs.hotkey.bind(hypershift, "l", function()
-  moveWindowOneSpace("2")
-end)
-
-hs.hotkey.bind(hypershift, ";", function()
-  hs.hints.windowHints()
-end)
 
 
 -- WATCHERS
+---------------------------------------------------------------------------
+
+-- watch for monitor changes and update layout
 -- change window layout on monitor configuration change
 -- local monitorWatcher = hs.screen.watcher.new(applyWindowLayout)
 -- monitorWatcher:start()
@@ -232,6 +220,7 @@ end)
 
 
 -- Mute on jack in/out
+---------------------------------------------------------------------------
 function audioWatch(uid, eventName, eventScope, channelIdx)
   if eventName == 'jack' then
     hs.alert.show("Audio Changed. Muting.")
@@ -246,24 +235,6 @@ local defaultDevice = hs.audiodevice.defaultOutputDevice()
 defaultDevice:watcherCallback(audioWatch);
 defaultDevice:watcherStart();
 
-print(defaultDevice)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -272,6 +243,7 @@ print(defaultDevice)
 -- Makes (and updates) the topbar menu filled with the current Space, the
 -- temperature and the fan speed. The Space only updates if the space is changed
 -- with the Hammerspoon shortcut (option + arrows does not work). 
+---------------------------------------------------------------------------
 local function makeStatsMenu(calledFromWhere)
   if statsMenu == nil then
     statsMenu = hs.menubar.new()
@@ -285,32 +257,13 @@ local function makeStatsMenu(calledFromWhere)
 
 end
 
-print( spaces.debug.layout())
+
+-- print( spaces.debug.layout())
 
 
--- Gets a list of windows and iterates until the window title is non-empty.
--- This avoids focusing the hidden windows apparently placed on top of all
--- Google Chrome windows. It also checks if the empty title belongs to Chrome,
--- because some apps don't give any of their windows a title, and should still
--- be focused.
-local function spaceChange()
-  makeStatsMenu("spaceChange")
-  visibleWindows = hs.window.orderedWindows()
-  for i, window in ipairs(visibleWindows) do
-    if window:application():title() == "Google Chrome" then
-      if window:title() ~= "" then
-        window:focus()
-        break
-      end
-    else
-      window:focus()
-      break
-    end
-  end
-end
 
-
--- How often to update Fan and Temp
+-- How often to update Menubar
+---------------------------------------------------------------------------
 updateStatsInterval = 5
 statsMenuTimer = hs.timer.new(updateStatsInterval, makeStatsMenu)
 statsMenuTimer:start()
@@ -320,6 +273,8 @@ makeStatsMenu()
 
 
 
+-- draw a crosshair on the screen on the cursor
+---------------------------------------------------------------------------
 crosshairx = nil
 crosshairy = nil
 
@@ -339,12 +294,13 @@ function updateCrosshairs()
   print(crosshairx)
   print(crosshairy)
 
-
+  -- draw crosshair x axis
   crosshairx:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
   crosshairx:setFill(false)
   crosshairx:setStrokeWidth(5)
   crosshairx:show()
 
+  -- draw crosshair y axis
   crosshairy:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
   crosshairy:setFill(false)
   crosshairy:setStrokeWidth(5)
@@ -362,13 +318,59 @@ function clearCrosshairs()
   end
 end
 
+-- crosshair timer - eats cpu!
+---------------------------------------------------------------------------
 -- updateCrosshairsInterval = 1
 -- crosshairTimer = hs.timer.new(updateCrosshairsInterval, updateCrosshairs)
 -- crosshairTimer:start()
+
+
+
+
+-- HOTKEYS
+---------------------------------------------------------------------------
+-- apply window layout for current monitor configuration
+hs.hotkey.bind(hypershift, "y", function()
+  applyWindowLayout()
+end)
+
+-- focus one space left
+hs.hotkey.bind(hypershift, "u", function()
+  moveOneSpace("1")
+end)
+
+-- focus one space right
+hs.hotkey.bind(hypershift, "o", function()
+  moveOneSpace("2")
+end)
+
+-- create new space
+hs.hotkey.bind(hypershift, "i", function()
+  hs.alert.show("creating new space")
+  spaces.createSpace()
+end)
+
+-- move focused widow one space left
+hs.hotkey.bind(hypershift, "h", function()
+  moveWindowOneSpace("1")
+end)
+
+-- move focused widow one space right
+hs.hotkey.bind(hypershift, "l", function()
+  moveWindowOneSpace("2")
+end)
+
+-- display window hints
+hs.hotkey.bind(hypershift, "a", function()
+  hs.hints.windowHints()
+end)
+
+-- draw crosshair
 hs.hotkey.bind(hypershift, "z", function()
   updateCrosshairs()
 end)
 
+-- remove crosshair
 hs.hotkey.bind(hyper, "z", function()
   clearCrosshairs()
 end)
