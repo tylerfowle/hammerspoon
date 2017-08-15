@@ -1,10 +1,14 @@
 -- CONFIG
 hs.application.enableSpotlightForNameSearches(true)
--- hs.window.animationDuration = 0
+hs.window.animationDuration = 0
+hs.window.setShadows(false)
+hs.hints.fontName           = "Hack"
+hs.hints.fontSize           = 22
+-- hs.hints.showTitleThresh    = 0
+hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'J', 'K', 'L', 'Q', 'W', 'E', 'R', 'Z', 'X', 'C' }
 
--- REQUIRE
+-- REQUIRES
 spaces = require("hs._asm.undocumented.spaces")
-
 
 hs.console.clearConsole()
 
@@ -13,7 +17,9 @@ local originSpacesCount = spaces.count()
 print (originSpacesCount)
 
 
-
+-- ALIASES
+local hyper 	 = {"cmd", "alt", "ctrl"}
+local hypershift = {"cmd", "alt", "ctrl", "shift"}
 
 
 -- AUTO RELOAD start
@@ -184,9 +190,7 @@ hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindo
 
 
 
--- ALIASES
-local hyper 	 = {"cmd", "alt", "ctrl"}
-local hypershift = {"cmd", "alt", "ctrl", "shift"}
+
 
 -- HOTKEYS
 hs.hotkey.bind(hypershift, "y", function()
@@ -214,6 +218,11 @@ hs.hotkey.bind(hypershift, "l", function()
   moveWindowOneSpace("2")
 end)
 
+hs.hotkey.bind(hypershift, ";", function()
+  hs.hints.windowHints()
+end)
+
+
 -- WATCHERS
 -- change window layout on monitor configuration change
 -- local monitorWatcher = hs.screen.watcher.new(applyWindowLayout)
@@ -239,3 +248,123 @@ defaultDevice:watcherStart();
 
 print(defaultDevice)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Makes (and updates) the topbar menu filled with the current Space, the
+-- temperature and the fan speed. The Space only updates if the space is changed
+-- with the Hammerspoon shortcut (option + arrows does not work). 
+local function makeStatsMenu(calledFromWhere)
+  if statsMenu == nil then
+    statsMenu = hs.menubar.new()
+  end
+  -- currentSpace = tostring(spaces.currentSpace())
+  currentSpace = tostring(spaces.currentSpace())
+  statsMenu:setTitle("Space " .. currentSpace)
+end
+
+print( spaces.debug.layout())
+
+
+-- Gets a list of windows and iterates until the window title is non-empty.
+-- This avoids focusing the hidden windows apparently placed on top of all
+-- Google Chrome windows. It also checks if the empty title belongs to Chrome,
+-- because some apps don't give any of their windows a title, and should still
+-- be focused.
+local function spaceChange()
+  makeStatsMenu("spaceChange")
+  visibleWindows = hs.window.orderedWindows()
+  for i, window in ipairs(visibleWindows) do
+    if window:application():title() == "Google Chrome" then
+      if window:title() ~= "" then
+        window:focus()
+        break
+      end
+    else
+      window:focus()
+      break
+    end
+  end
+end
+
+
+-- How often to update Fan and Temp
+updateStatsInterval = 5
+statsMenuTimer = hs.timer.new(updateStatsInterval, makeStatsMenu)
+statsMenuTimer:start()
+
+currentSpace = tostring(spaces.currentSpace())
+makeStatsMenu()
+
+
+
+crosshairx = nil
+crosshairy = nil
+
+function updateCrosshairs()
+
+  clearCrosshairs()
+
+  -- Get the current co-ordinates of the mouse pointer
+  mousepos= hs.geometry.point(hs.mouse.getRelativePosition())
+  mousepoint = hs.mouse.getAbsolutePosition()
+  -- Prepare a big red circle around the mouse pointer
+  crosshairx = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x-2500, mousepoint.y, 5000, 1))
+  crosshairy = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x, mousepoint.y-2500, 1, 5000))
+  -- crosshairx = hs.drawing.line(hs.geometry.point(mousepoint.x-500,mousepoint.y), hs.geometry.point(mousepoint.x+500,mousepoint.y))
+  -- crosshairx = hs.drawing.line({mousepoint.x,-5000},{mousepoint.x, 5000})
+  print(mousepos)
+  print(crosshairx)
+  print(crosshairy)
+
+
+  crosshairx:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
+  crosshairx:setFill(false)
+  crosshairx:setStrokeWidth(5)
+  crosshairx:show()
+
+  crosshairy:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
+  crosshairy:setFill(false)
+  crosshairy:setStrokeWidth(5)
+  crosshairy:show()
+
+end
+
+function clearCrosshairs()
+  if crosshairx then
+    crosshairx:delete()
+  end
+
+  if crosshairy then
+    crosshairy:delete()
+  end
+end
+
+-- updateCrosshairsInterval = 1
+-- crosshairTimer = hs.timer.new(updateCrosshairsInterval, updateCrosshairs)
+-- crosshairTimer:start()
+hs.hotkey.bind(hypershift, "z", function()
+  updateCrosshairs()
+end)
+
+hs.hotkey.bind(hyper, "z", function()
+  clearCrosshairs()
+end)
