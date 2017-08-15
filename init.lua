@@ -252,9 +252,8 @@ local function makeStatsMenu(calledFromWhere)
   currentSpace = tostring(spaces.currentSpace())
   defaultDevice = hs.audiodevice.defaultOutputDevice()
   defaultDeviceName = tostring(defaultDevice:name())
-  statsMenu:setTitle("Space:" .. currentSpace .. " | " .. "Audio: " .. defaultDeviceName .. " | ")
-
-
+  defaultDeviceVolume = math.floor(defaultDevice:outputVolume())
+  statsMenu:setTitle("Space: " .. currentSpace .. " | " .. "Audio: " .. defaultDeviceName .. " | "  .. "Volume: " .. defaultDeviceVolume .. " | ")
 end
 
 
