@@ -273,13 +273,15 @@ makeStatsMenu()
 
 
 -- draw a crosshair on the screen on the cursor
+-- TODO: make variables local
 ---------------------------------------------------------------------------
 crosshairx = nil
 crosshairy = nil
+crosshairCount = 0
+crosshairObjectX = {}
+crosshairObjectY = {}
 
 function updateCrosshairs()
-
-  clearCrosshairs()
 
   -- Get the current co-ordinates of the mouse pointer
   mousepos= hs.geometry.point(hs.mouse.getRelativePosition())
@@ -289,9 +291,7 @@ function updateCrosshairs()
   crosshairy = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x, mousepoint.y-2500, 1, 5000))
   -- crosshairx = hs.drawing.line(hs.geometry.point(mousepoint.x-500,mousepoint.y), hs.geometry.point(mousepoint.x+500,mousepoint.y))
   -- crosshairx = hs.drawing.line({mousepoint.x,-5000},{mousepoint.x, 5000})
-  print(mousepos)
-  print(crosshairx)
-  print(crosshairy)
+  print(mousepoint)
 
   -- draw crosshair x axis
   crosshairx:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
@@ -305,17 +305,32 @@ function updateCrosshairs()
   crosshairy:setStrokeWidth(1)
   crosshairy:show()
 
+  crosshairCount = crosshairCount + 1
+  print(crosshairCount)
+  crosshairObjectX[crosshairCount] = crosshairx
+  crosshairObjectY[crosshairCount] = crosshairy
+
+  return crosshairObjectX, crosshairObjectY,crosshairCount
+
 end
 
+-- remove all crosshairs from screen
 function clearCrosshairs()
-  if crosshairx then
-    crosshairx:delete()
+
+  print("clear crosshairs")
+
+  print(crosshairCount)
+  for i=1,crosshairCount do
+    print(crosshairObjectX[i])
+    crosshairObjectX[i]:delete()
+    crosshairObjectY[i]:delete()
   end
 
-  if crosshairy then
-    crosshairy:delete()
-  end
+  crosshairCount = 0
+  return crosshairObjectX, crosshairObjectY, crosshairCount
+
 end
+
 
 -- crosshair timer - eats cpu!
 ---------------------------------------------------------------------------
