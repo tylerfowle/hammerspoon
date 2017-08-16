@@ -275,8 +275,8 @@ makeStatsMenu()
 -- draw a crosshair on the screen on the cursor
 -- TODO: make variables local
 ---------------------------------------------------------------------------
-crosshairx = nil
-crosshairy = nil
+crosshairX = nil
+crosshairY = nil
 crosshairCount = 0
 crosshairObjectX = {}
 crosshairObjectY = {}
@@ -284,31 +284,30 @@ crosshairObjectY = {}
 function updateCrosshairs()
 
   -- Get the current co-ordinates of the mouse pointer
-  mousepos= hs.geometry.point(hs.mouse.getRelativePosition())
   mousepoint = hs.mouse.getAbsolutePosition()
   -- Prepare a big red circle around the mouse pointer
-  crosshairx = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x-2500, mousepoint.y, 5000, 1))
-  crosshairy = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x, mousepoint.y-2500, 1, 5000))
-  -- crosshairx = hs.drawing.line(hs.geometry.point(mousepoint.x-500,mousepoint.y), hs.geometry.point(mousepoint.x+500,mousepoint.y))
-  -- crosshairx = hs.drawing.line({mousepoint.x,-5000},{mousepoint.x, 5000})
+  crosshairX = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x-2500, mousepoint.y, 5000, 1))
+  crosshairY = hs.drawing.rectangle(hs.geometry.rect(mousepoint.x, mousepoint.y-2500, 1, 5000))
+  -- crosshairX = hs.drawing.line(hs.geometry.point(mousepoint.x-500,mousepoint.y), hs.geometry.point(mousepoint.x+500,mousepoint.y))
+  -- crosshairX = hs.drawing.line({mousepoint.x,-5000},{mousepoint.x, 5000})
   print(mousepoint)
 
   -- draw crosshair x axis
-  crosshairx:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
-  crosshairx:setFill(false)
-  crosshairx:setStrokeWidth(1)
-  crosshairx:show()
+  crosshairX:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
+  crosshairX:setFill(false)
+  crosshairX:setStrokeWidth(1)
+  crosshairX:show()
 
   -- draw crosshair y axis
-  crosshairy:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
-  crosshairy:setFill(false)
-  crosshairy:setStrokeWidth(1)
-  crosshairy:show()
+  crosshairY:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
+  crosshairY:setFill(false)
+  crosshairY:setStrokeWidth(1)
+  -- crosshairY:show()
 
   crosshairCount = crosshairCount + 1
   print(crosshairCount)
-  crosshairObjectX[crosshairCount] = crosshairx
-  crosshairObjectY[crosshairCount] = crosshairy
+  crosshairObjectX[crosshairCount] = crosshairX
+  crosshairObjectY[crosshairCount] = crosshairY
 
   return crosshairObjectX, crosshairObjectY,crosshairCount
 
