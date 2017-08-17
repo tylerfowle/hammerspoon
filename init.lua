@@ -412,7 +412,7 @@ end tell
 function tabChooserCallback(input)
   print(input.id)
   hs.osascript.applescript("tell application \"Google Chrome\" to set active tab index of first window to " .. input.id)
-  hs.application.launchOrFocus("Google Chrome")
+  -- hs.application.launchOrFocus("Google Chrome")
 end
 
 
