@@ -52,7 +52,7 @@ hs.hotkey.bind(hyper, "z", function()
   clearCrosshairs()
 end)
 
-
+-- chrome fuzzy search tabs
 hs.hotkey.bind(hyper,"space", function()
   tabSwitcher()
 end)
