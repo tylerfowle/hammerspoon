@@ -4,46 +4,23 @@ hs.window.animationDuration = 0
 hs.window.setShadows(false)
 hs.hints.fontName           = "Hack"
 hs.hints.fontSize           = 22
--- hs.hints.showTitleThresh    = 0
--- hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'J', 'K', 'L', 'Q', 'W', 'E', 'R', 'Z', 'X', 'C' }
+hs.hints.showTitleThresh    = 0
 hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'G', 'Q', 'W', 'E', 'R', 'T', 'Z', 'X', 'C', 'V', 'B' }
+hs.console.clearConsole()
 
 -- REQUIRES
 ---------------------------------------------------------------------------
 spaces = require("hs._asm.undocumented.spaces")
-
-hs.console.clearConsole()
+require("reload")
+require("audio.mute_jack")
+require("window.layout.work")
+require("window.layout.mobile")
+require("hotkeys.init")
 
 -- CONFIG SPACES
 ---------------------------------------------------------------------------
 local originSpacesCount = spaces.count()
 print (originSpacesCount)
-
-
--- ALIASES
----------------------------------------------------------------------------
-local hyper 	 = {"cmd", "alt", "ctrl"}
-local hypershift = {"cmd", "alt", "ctrl", "shift"}
-
-
--- AUTO RELOAD start
----------------------------------------------------------------------------
-function reloadConfig(files)
-  doReload = false
-  for _,file in pairs(files) do
-    if file:sub(-4) == ".lua" then
-      doReload = true
-    end
-  end
-  if doReload then
-    hs.reload()
-  end
-end
-myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
-hs.alert.show("Config loaded")
--- auto reload end
-
-
 
 -- APPLY LAYOUT FUNCTION
 ---------------------------------------------------------------------------
@@ -57,45 +34,6 @@ function applyWindowLayout()
     applyMobileLayout()
   end
 
-end
-
-
--- WORK LAYOUT
----------------------------------------------------------------------------
-function applyWorkLayout()
-
-  local laptopScreen = hs.screen.allScreens()[1]:name()
-  local thunder1 =    hs.screen.allScreens()[2]:name()
-  local thunder2 =    hs.screen.allScreens()[3]:name()
-
-  local workLayout = {
-    {"Chrome",  nil, thunder2, hs.layout.right50,    nil, nil},
-    {"Mail", nil, thunder1, hs.layout.right50, nil, nil},
-
-    {"iTerm2", nil, thunder1, hs.layout.top50, nil, nil},
-    {"Spotify", nil, thunder1, hs.layout.right50, nil, nil},
-  }
-
-  hs.layout.apply(workLayout)
-
-end
-
-
--- MOBILE LAYOUT
----------------------------------------------------------------------------
-function applyMobileLayout()
-
-  local laptopScreen = hs.screen.allScreens()[1]:name()
-
-  local mobileLayout = {
-    {"Google Chrome",  nil, laptopScreen, hs.layout.left50,    nil, nil},
-    {"Mail", nil, laptopScreen, hs.layout.left50, nil, nil},
-
-    {"iTerm2", nil, laptopScreen, hs.layout.left50, nil, nil},
-    {"Spotify", nil, laptopScreen, hs.layout.left50, nil, nil},
-  }
-
-  hs.layout.apply(mobileLayout)
 end
 
 
@@ -175,39 +113,6 @@ end
 
 
 
--- alt+tab WINDOW SWITCHER
----------------------------------------------------------------------------
-hs.window.switcher.ui.textColor = {0.9,0.9,0.9}
-hs.window.switcher.ui.fontName = 'Hack'
-hs.window.switcher.ui.textSize = 10 -- in screen points
-hs.window.switcher.ui.highlightColor = {0.8,0.5,0,0.8}  -- highlight color for the selected window
-hs.window.switcher.ui.backgroundColor = {0.2,0.2,0.2,0}
-hs.window.switcher.ui.onlyActiveApplication = false -- only show windows of the active application
-hs.window.switcher.ui.showTitles = false  -- show window titles
-hs.window.switcher.ui.titleBackgroundColor = {0,0,0}
-hs.window.switcher.ui.showThumbnails = false  -- show window thumbnails
-hs.window.switcher.ui.thumbnailSize = 32  -- size of window thumbnails in screen points
-hs.window.switcher.ui.showSelectedThumbnail = true  -- show a larger thumbnail for the currently selected window
-hs.window.switcher.ui.selectedThumbnailSize = 600
-hs.window.switcher.ui.showSelectedTitle = false  -- show larger title for the currently selected window
-
--- set up your windowfilter
-switcher = hs.window.switcher.new() -- default windowfilter: only visible windows, all Spaces
-switcher_space = hs.window.switcher.new(hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{}) -- include minimized/hidden windows, current Space only
-switcher_browsers = hs.window.switcher.new{'Safari','Google Chrome'} -- specialized switcher for your dozens of browser windows :)
-
--- alternatively, call .nextWindow() or .previousWindow() directly (same as hs.window.switcher.new():next())
-hs.hotkey.bind('ctrl','tab','Next window',hs.window.switcher.nextWindow)
--- you can also bind to `repeatFn` for faster traversing
-hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindow,nil,hs.window.switcher.previousWindow)
-
-
-
-
-
-
-
-
 -- WATCHERS
 ---------------------------------------------------------------------------
 
@@ -217,23 +122,6 @@ hs.hotkey.bind('ctrl-shift','tab','Prev window',hs.window.switcher.previousWindo
 -- monitorWatcher:start()
 
 
-
-
--- Mute on jack in/out
----------------------------------------------------------------------------
-function audioWatch(uid, eventName, eventScope, channelIdx)
-  if eventName == 'jack' then
-    hs.alert.show("Audio Changed. Muting.")
-    hs.audiodevice.defaultOutputDevice():setVolume(0)
-  end
-
-end
-
-
--- Watch device; mute when headphones unplugged.
-local defaultDevice = hs.audiodevice.defaultOutputDevice()
-defaultDevice:watcherCallback(audioWatch);
-defaultDevice:watcherStart();
 
 
 
@@ -443,83 +331,6 @@ function tabSwitcher()
   end
 end 
 
--- Emacs style switcher. Uncomment the last line for something maybe
--- more usual
-
--- k = hs.hotkey.modal.new('ctrl', 'x')
--- k:bind('', 'escape', function() k:exit() end)
--- k:bind('', 'b', nil , tabSwitcher)
-
-hs.hotkey.bind(hyper,'space', tabSwitcher)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- HOTKEYS
----------------------------------------------------------------------------
--- apply window layout for current monitor configuration
-hs.hotkey.bind(hypershift, "y", function()
-  applyWindowLayout()
-end)
-
--- focus one space left
-hs.hotkey.bind(hypershift, "u", function()
-  moveOneSpace("1")
-end)
-
--- focus one space right
-hs.hotkey.bind(hypershift, "o", function()
-  moveOneSpace("2")
-end)
-
--- create new space
-hs.hotkey.bind(hypershift, "i", function()
-  hs.alert.show("creating new space")
-  spaces.createSpace()
-end)
-
--- move focused widow one space left
-hs.hotkey.bind(hypershift, "h", function()
-  moveWindowOneSpace("1")
-end)
-
--- move focused widow one space right
-hs.hotkey.bind(hypershift, "l", function()
-  moveWindowOneSpace("2")
-end)
-
--- display window hints
-hs.hotkey.bind(hypershift, "a", function()
-  hs.hints.windowHints()
-end)
-
--- draw crosshair
-hs.hotkey.bind(hypershift, "z", function()
-  updateCrosshairs()
-end)
-
--- remove crosshair
-hs.hotkey.bind(hyper, "z", function()
-  clearCrosshairs()
-end)
 
 
 
