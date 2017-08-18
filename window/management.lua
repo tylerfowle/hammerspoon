@@ -1,5 +1,5 @@
 local sizes = {2, 3, 3/2}
-local fullScreenSizes = {1, 4/3, 2}
+local fullScreenSizes = {1, 4/3, 2, 3}
 
 local GRID = {w = 24, h = 24}
 hs.grid.setGrid(GRID.w .. 'x' .. GRID.h)
@@ -30,77 +30,77 @@ function nextStep(dim, offs, cb)
         (cell[axis] + (offs and cell[dim] or 0)) == (offs and GRID[dim] or 0)
         then
           nextSize = sizes[(i % #sizes) + 1]
-        break
+          break
+        end
       end
-    end
 
-    cb(cell, nextSize)
-    if cell[oppAxis] ~= 0 and cell[oppAxis] + cell[oppDim] ~= GRID[oppDim] then
-      cell[oppDim] = GRID[oppDim]
-      cell[oppAxis] = 0
-    end
-
-    hs.grid.set(win, cell, screen)
-  end
-end
-
-function nextFullScreenStep()
-  if hs.window.focusedWindow() then
-    local win = hs.window.frontmostWindow()
-    local id = win:id()
-    local screen = win:screen()
-
-    cell = hs.grid.get(win, screen)
-
-    local nextSize = fullScreenSizes[1]
-    for i=1,#fullScreenSizes do
-      if cell.w == GRID.w / fullScreenSizes[i] and 
-         cell.h == GRID.h / fullScreenSizes[i] and
-         cell.x == (GRID.w - GRID.w / fullScreenSizes[i]) / 2 and
-         cell.y == (GRID.h - GRID.h / fullScreenSizes[i]) / 2 then
-        nextSize = fullScreenSizes[(i % #fullScreenSizes) + 1]
-        break
+      cb(cell, nextSize)
+      if cell[oppAxis] ~= 0 and cell[oppAxis] + cell[oppDim] ~= GRID[oppDim] then
+        cell[oppDim] = GRID[oppDim]
+        cell[oppAxis] = 0
       end
+
+      hs.grid.set(win, cell, screen)
     end
-
-    cell.w = GRID.w / nextSize
-    cell.h = GRID.h / nextSize
-    cell.x = (GRID.w - GRID.w / nextSize) / 2
-    cell.y = (GRID.h - GRID.h / nextSize) / 2
-
-    hs.grid.set(win, cell, screen)
   end
-end
 
-function fullDimension(dim)
-  if hs.window.focusedWindow() then
-    local win = hs.window.frontmostWindow()
-    local id = win:id()
-    local screen = win:screen()
-    cell = hs.grid.get(win, screen)
+  function nextFullScreenStep()
+    if hs.window.focusedWindow() then
+      local win = hs.window.frontmostWindow()
+      local id = win:id()
+      local screen = win:screen()
 
-    if (dim == 'x') then
-      cell = '0,0 ' .. GRID.w .. 'x' .. GRID.h
-    else  
-      cell[dim] = GRID[dim]
-      cell[dim == 'w' and 'x' or 'y'] = 0
-    end
+      cell = hs.grid.get(win, screen)
 
-    hs.grid.set(win, cell, screen)
-  end
-end
+      local nextSize = fullScreenSizes[1]
+      for i=1,#fullScreenSizes do
+        if cell.w == GRID.w / fullScreenSizes[i] and 
+          cell.h == GRID.h / fullScreenSizes[i] and
+          cell.x == (GRID.w - GRID.w / fullScreenSizes[i]) / 2 and
+          cell.y == (GRID.h - GRID.h / fullScreenSizes[i]) / 2 then
+          nextSize = fullScreenSizes[(i % #fullScreenSizes) + 1]
+          break
+        end
+      end
 
-hs.hotkey.bind(hypershift, "C", function ()
-  pressed.down = true
-  if pressed.up then 
-    fullDimension('h')
-  else
-    nextStep('h', true, function (cell, nextSize)
-      cell.y = GRID.h - GRID.h / nextSize
+      cell.w = GRID.w / nextSize
       cell.h = GRID.h / nextSize
-    end)
+      cell.x = (GRID.w - GRID.w / nextSize) / 2
+      cell.y = (GRID.h - GRID.h / nextSize) / 2
+
+      hs.grid.set(win, cell, screen)
+    end
   end
-end, function () 
+
+  function fullDimension(dim)
+    if hs.window.focusedWindow() then
+      local win = hs.window.frontmostWindow()
+      local id = win:id()
+      local screen = win:screen()
+      cell = hs.grid.get(win, screen)
+
+      if (dim == 'x') then
+        cell = '0,0 ' .. GRID.w .. 'x' .. GRID.h
+      else
+        cell[dim] = GRID[dim]
+        cell[dim == 'w' and 'x' or 'y'] = 0
+      end
+
+      hs.grid.set(win, cell, screen)
+    end
+  end
+
+  hs.hotkey.bind(hypershift, "C", function ()
+    pressed.down = true
+    if pressed.up then
+      fullDimension('h')
+    else
+      nextStep('h', true, function (cell, nextSize)
+        cell.y = GRID.h - GRID.h / nextSize
+        cell.h = GRID.h / nextSize
+      end)
+    end
+  end, function ()
   pressed.down = false
 end)
 
@@ -115,7 +115,7 @@ hs.hotkey.bind(hypershift, "F", function ()
     end)
   end
 end, function () 
-  pressed.right = false
+pressed.right = false
 end)
 
 hs.hotkey.bind(hypershift, "S", function ()
@@ -128,22 +128,22 @@ hs.hotkey.bind(hypershift, "S", function ()
       cell.w = GRID.w / nextSize
     end)
   end
-end, function () 
-  pressed.left = false
+end, function ()
+pressed.left = false
 end)
 
 hs.hotkey.bind(hypershift, "E", function ()
   pressed.up = true
-  if pressed.down then 
-      fullDimension('h')
+  if pressed.down then
+    fullDimension('h')
   else
     nextStep('h', false, function (cell, nextSize)
       cell.y = 0
       cell.h = GRID.h / nextSize
     end)
   end
-end, function () 
-  pressed.up = false
+end, function ()
+pressed.up = false
 end)
 
 hs.hotkey.bind(hypershift, "G", function ()
