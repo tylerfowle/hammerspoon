@@ -1,8 +1,11 @@
 --MODIFIERS
 ---------------------------------------------------------------------------
-local hyper 	 = {"cmd", "alt", "ctrl"}
-local hypershift = {"cmd", "alt", "ctrl", "shift"}
+hyper 	 = {"cmd", "alt", "ctrl"}
+hypershift = {"cmd", "alt", "ctrl", "shift"}
 
+
+-- windows management
+-- hypershift + E,S,F,C
 
 -- HOTKEYS
 ---------------------------------------------------------------------------
@@ -11,13 +14,25 @@ hs.hotkey.bind(hypershift, "y", function()
   applyWindowLayout()
 end)
 
+hs.hotkey.bind(hypershift, "t", function()
+    -- hs.window.focusedWindow():moveOneScreenWest()
+    hs.window.focusedWindow():moveOneScreenEast()
+
+  if hs.window.focusedWindow() then
+    local win = hs.window.frontmostWindow()
+    local id = win:id()
+    local screen = win:screen()
+  end
+
+end)
+
 -- focus one space left
-hs.hotkey.bind(hypershift, "u", function()
+hs.hotkey.bind(hypershift, "w", function()
   moveOneSpace("1")
 end)
 
 -- focus one space right
-hs.hotkey.bind(hypershift, "o", function()
+hs.hotkey.bind(hypershift, "r", function()
   moveOneSpace("2")
 end)
 
