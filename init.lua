@@ -18,20 +18,25 @@ require("reload")
 
 require("helpers.monitor-test")
 
+-- audio
 require("audio.mute_jack")
 
-require("window.layout.apply")
-require("window.layout.work")
-require("window.layout.mobile")
+-- window
+require("window.layout")
 require("window.mission-control")
+require("window.management")
+
+-- -- spaces
 require("window.spaces.focus-space")
 require("window.spaces.move-window")
 require("window.screens.move-window")
-require("window.management")
 
+-- menubar
 require("menubar")
 
+-- apps
 require("apps.crosshair")
 require("apps.chrome-tab-chooser")
 
+-- watchers
 require("watchers")
