@@ -44,22 +44,20 @@ function applyMobileLayout()
   local primaryScreen = hs.screen.primaryScreen() -- primary screen
   local mainScreen = hs.screen.mainScreen() -- currently focused window screen
 
-  local rightScreen = hs.screen.primaryScreen()
-  local middleScreen = hs.screen.primaryScreen():toWest()
-  local leftScreen = hs.screen.primaryScreen():toWest():toWest()
+  local allWindows = hs.window.allWindows()
 
 
-  local mobileLayout = {
-    {"Google Chrome", nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"Photoshop CC",  nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"iTerm2",        nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"Mail",          nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"Calendar",      nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"Spotify",       nil, primaryScreen, hs.layout.maximized, nil, nil},
-    {"Slack",         nil, primaryScreen, hs.layout.maximized, nil, nil},
-  }
+  for k,v in pairs(allWindows) do
+    print(k,v:application())
 
-  hs.layout.apply(mobileLayout)
+    local mobileLayout = {
+      {v:application(), nil, primaryScreen, hs.layout.maximized, nil, nil},
+    }
+
+    hs.layout.apply(mobileLayout)
+  end
+
+
 end
 
 
