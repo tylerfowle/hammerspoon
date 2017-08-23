@@ -24,8 +24,9 @@ function applyWorkLayout()
 
   local workLayout = {
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
-    {"Photoshop CC",  nil, leftScreen,   hs.layout.left50,    nil, nil},
+    {"Photoshop CC",  nil, leftScreen,   hs.layout.left70,    nil, nil},
     {"iTerm2",        nil, middleScreen, hs.layout.right70,   nil, nil},
+    {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
     {"Mail",          nil, rightScreen,  hs.layout.left50,    nil, nil},
     {"Calendar",      nil, rightScreen,  hs.layout.right50,   nil, nil},
     {"Spotify",       nil, rightScreen,  hs.layout.maximized, nil, nil},
