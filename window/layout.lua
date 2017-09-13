@@ -29,8 +29,8 @@ function applyWorkLayout()
     {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
     {"Mail",          nil, rightScreen,  hs.layout.left50,    nil, nil},
     {"Calendar",      nil, rightScreen,  hs.layout.right50,   nil, nil},
-    {"Spotify",       nil, rightScreen,  hs.layout.maximized, nil, nil},
-    {"Slack",         nil, rightScreen,  hs.layout.maximized, nil, nil},
+    {"Spotify",       nil, rightScreen,  hs.layout.right50, nil, nil},
+    {"Slack",         nil, rightScreen,  hs.layout.left50, nil, nil},
   }
 
   hs.layout.apply(workLayout)
