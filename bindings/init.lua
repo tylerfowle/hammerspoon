@@ -6,6 +6,33 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 -- windows management
 -- hypershift + E,S,F,C
 
+
+
+-- Mouse Remap
+local function mousePress(eventobj)
+
+  if eventobj:getButtonState(4) then
+    print("mouse button 5")
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.shift, true):post()
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.delete, true):post()
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.delete, false):post()
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.shift, false):post()
+  end
+
+  if eventobj:getButtonState(3) then
+    print("mouse button 4")
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.delete, true):post()
+    hs.eventtap.event.newKeyEvent(hs.keycodes.map.delete,  false):post()
+  end
+
+  return false
+end
+
+hs.eventtap.new({25}, mousePress):start()
+
+
+
+
 -- HOTKEYS
 ---------------------------------------------------------------------------
 -- apply window layout for current monitor configuration
