@@ -1,4 +1,4 @@
-local sizes = {2, 3, 4, 6, 3/2}
+local sizes = {2, 3, 4, 6, 6/5, 3/2}
 local fullScreenSizes = {1, 3}
 
 local GRID = {w = 24, h = 24}
