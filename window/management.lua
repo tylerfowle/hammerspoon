@@ -1,5 +1,5 @@
 local sizes = {2, 3, 4, 6, 3/2}
-local fullScreenSizes = {1, 4/3, 2, 3}
+local fullScreenSizes = {1, 3}
 
 local GRID = {w = 24, h = 24}
 hs.grid.setGrid(GRID.w .. 'x' .. GRID.h)
@@ -55,9 +55,9 @@ function nextStep(dim, offs, cb)
       local nextSize = fullScreenSizes[1]
       for i=1,#fullScreenSizes do
         if cell.w == GRID.w / fullScreenSizes[i] and 
-          cell.h == GRID.h / fullScreenSizes[i] and
-          cell.x == (GRID.w - GRID.w / fullScreenSizes[i]) / 2 and
-          cell.y == (GRID.h - GRID.h / fullScreenSizes[i]) / 2 then
+          -- cell.h == GRID.h / fullScreenSizes[i] and
+          cell.x == (GRID.w - GRID.w / fullScreenSizes[i]) / 2 then
+          -- cell.y == (GRID.h - GRID.h / fullScreenSizes[i]) / 2 then
           nextSize = fullScreenSizes[(i % #fullScreenSizes) + 1]
           break
         end
@@ -67,6 +67,10 @@ function nextStep(dim, offs, cb)
       cell.h = GRID.h / nextSize
       cell.x = (GRID.w - GRID.w / nextSize) / 2
       cell.y = (GRID.h - GRID.h / nextSize) / 2
+
+      -- override height and y so that it is always 100% tall
+      cell.h = 100
+      cell.y = 0
 
       hs.grid.set(win, cell, screen)
     end
