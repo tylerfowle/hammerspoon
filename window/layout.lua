@@ -22,8 +22,11 @@ function applyWorkLayout()
   print(hs.window.frontmostWindow():application())
 
 
+
+
   local workLayout = {
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
+    -- {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('wunderlist'), leftScreen,   hs.layout.left25,   nil, nil},
     {"Photoshop CC",  nil, leftScreen,   hs.layout.left70,    nil, nil},
     {"iTerm2",        nil, middleScreen, hs.layout.right70,   nil, nil},
     {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
@@ -65,6 +68,7 @@ end
 -- APPLY LAYOUT FUNCTION
 ---------------------------------------------------------------------------
 function applyWindowLayout()
+  print(hs.application.allWindows)
 
   local numberOfScreens = #hs.screen.allScreens()
 
