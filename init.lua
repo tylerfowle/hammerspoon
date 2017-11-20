@@ -30,6 +30,7 @@ require("window.management")
 require("window.spaces.focus-space")
 require("window.spaces.move-window")
 require("window.screens.move-window")
+require("window.screens.move-cursor")
 
 -- menubar
 require("menubar")

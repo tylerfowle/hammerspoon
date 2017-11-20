@@ -29,6 +29,14 @@ hs.hotkey.bind(hypershift, "v", function()
 end)
 
 
+-- CURSOR
+---------------------------------------------------------------------------
+
+-- push window one screen right
+hs.hotkey.bind(hypershift, "d", function()
+  moveCursorToScreen()
+end)
+
 
 -- SPACES
 ---------------------------------------------------------------------------
