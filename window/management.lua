@@ -1,4 +1,4 @@
-local sizes = {2, 3, 6, 6/5, 3/2}
+local sizes = {2, 6/5, 3/2, 3, 6}
 local fullScreenSizes = {1, 3}
 
 local GRID = {w = 24, h = 24}
@@ -54,7 +54,7 @@ function nextStep(dim, offs, cb)
 
       local nextSize = fullScreenSizes[1]
       for i=1,#fullScreenSizes do
-        if cell.w == GRID.w / fullScreenSizes[i] and 
+        if cell.w == GRID.w / fullScreenSizes[i] and
           -- cell.h == GRID.h / fullScreenSizes[i] and
           cell.x == (GRID.w - GRID.w / fullScreenSizes[i]) / 2 then
           -- cell.y == (GRID.h - GRID.h / fullScreenSizes[i]) / 2 then
