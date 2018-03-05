@@ -1,5 +1,6 @@
 local sizes = {2, 3, 3/2}
 local fullScreenSizes = {1, 3}
+local focusScreenSizes = {1, 4/3, 2, 3}
 
 local GRID = {w = 24, h = 24}
 hs.grid.setGrid(GRID.w .. 'x' .. GRID.h)
@@ -39,6 +40,34 @@ function nextStep(dim, offs, cb)
         cell[oppDim] = GRID[oppDim]
         cell[oppAxis] = 0
       end
+
+      hs.grid.set(win, cell, screen)
+    end
+  end
+
+  function nextFocusScreenStep()
+    if hs.window.focusedWindow() then
+      local win = hs.window.frontmostWindow()
+      local id = win:id()
+      local screen = win:screen()
+
+      cell = hs.grid.get(win, screen)
+
+      local nextSize = focusScreenSizes[1]
+      for i=1,#focusScreenSizes do
+        if cell.w == GRID.w / focusScreenSizes[i] and
+          cell.h == GRID.h / focusScreenSizes[i] and
+          cell.x == (GRID.w - GRID.w / focusScreenSizes[i]) / 2 and
+          cell.y == (GRID.h - GRID.h / focusScreenSizes[i]) / 2 then
+          nextSize = focusScreenSizes[(i % #focusScreenSizes) + 1]
+          break
+        end
+      end
+
+      cell.w = GRID.w / nextSize
+      cell.h = GRID.h / nextSize
+      cell.x = (GRID.w - GRID.w / nextSize) / 2
+      cell.y = (GRID.h - GRID.h / nextSize) / 2
 
       hs.grid.set(win, cell, screen)
     end
@@ -152,6 +181,10 @@ end)
 
 hs.hotkey.bind(hypershift, "G", function ()
   nextFullScreenStep()
+end)
+
+hs.hotkey.bind(hypershift, "T", function()
+  nextFocusScreenStep()
 end)
 
 hs.hotkey.bind(hyper, "i", function ()
