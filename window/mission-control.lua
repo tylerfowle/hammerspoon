@@ -30,9 +30,9 @@ function redrawBorder()
             global_border:delete()
         end
         global_border = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-        global_border:setStrokeColor({ hex = "#afb222", alpha = .65 })
+        global_border:setStrokeColor({ hex = "#e6d9b3", alpha = 1 })
         global_border:setFill(false)
-        global_border:setStrokeWidth(2)
+        global_border:setStrokeWidth(1)
         global_border:show()
     end
 end

@@ -28,7 +28,7 @@ function updateCrosshairs()
   crosshairY:setStrokeColor({["red"]=0,["blue"]=0,["green"]=0,["alpha"]=1})
   crosshairY:setFill(false)
   crosshairY:setStrokeWidth(1)
-  -- crosshairY:show()
+  crosshairY:show()
 
   crosshairCount = crosshairCount + 1
   print(crosshairCount)
