@@ -9,15 +9,17 @@ function applyWorkLayout()
   local primaryScreen = hs.screen.primaryScreen() -- primary screen
   local mainScreen = hs.screen.mainScreen() -- currently focused window screen
 
-  local rightScreen = hs.screen.primaryScreen()
-  local middleScreen = hs.screen.primaryScreen():toWest()
-  local leftScreen = hs.screen.primaryScreen():toWest():toWest()
+  local middleScreen = hs.screen.primaryScreen()
+  local leftScreen = hs.screen.primaryScreen():toWest()
+  local rightScreen = hs.screen.primaryScreen():toEast()
 
 
 
+  print("----------------------")
   print(rightScreen)
   print(middleScreen)
   print(leftScreen)
+  print("----------------------")
 
   print(hs.window.frontmostWindow():application())
 
@@ -26,14 +28,14 @@ function applyWorkLayout()
 
   local workLayout = {
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
-    -- {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('wunderlist'), leftScreen,   hs.layout.left25,   nil, nil},
-    {"Photoshop CC",  nil, leftScreen,   hs.layout.left70,    nil, nil},
-    {"iTerm2",        nil, middleScreen, hs.layout.right70,   nil, nil},
+    {"Photoshop CC",  nil, leftScreen,   hs.layout.maximized,    nil, nil},
+    {"Adobe Illustrator CC 2018",  nil, middleScreen,   hs.layout.maximized,    nil, nil},
+    {"iTerm2",        nil, rightScreen, hs.layout.right70,   nil, nil},
     {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
-    {"Mail",          nil, rightScreen,  hs.layout.left50,    nil, nil},
-    {"Calendar",      nil, rightScreen,  hs.layout.right50,   nil, nil},
-    {"Spotify",       nil, rightScreen,  hs.layout.right50, nil, nil},
-    {"Slack",         nil, rightScreen,  hs.layout.left50, nil, nil},
+    {"Mail",          nil, middleScreen,  hs.layout.left50,    nil, nil},
+    {"Calendar",      nil, middleScreen,  hs.layout.right50,   nil, nil},
+    {"Spotify",       nil, middleScreen,  hs.layout.right50, nil, nil},
+    {"Slack",         nil, middleScreen,  hs.layout.left50, nil, nil},
   }
 
   hs.layout.apply(workLayout)
