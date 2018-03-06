@@ -13,8 +13,6 @@ function applyWorkLayout()
   local leftScreen = hs.screen.primaryScreen():toWest()
   local rightScreen = hs.screen.primaryScreen():toEast()
 
-
-
   print("----------------------")
   print(rightScreen)
   print(middleScreen)
@@ -23,12 +21,9 @@ function applyWorkLayout()
 
   print(hs.window.frontmostWindow():application())
 
-
-
-
   local workLayout = {
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
-    {"Photoshop CC",  nil, leftScreen,   hs.layout.maximized,    nil, nil},
+    {"Adobe Photoshop CC 2018",  nil, leftScreen,   hs.layout.maximized,    nil, nil},
     {"Adobe Illustrator CC 2018",  nil, middleScreen,   hs.layout.maximized,    nil, nil},
     {"iTerm2",        nil, rightScreen, hs.layout.right70,   nil, nil},
     {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
@@ -36,6 +31,9 @@ function applyWorkLayout()
     {"Calendar",      nil, middleScreen,  hs.layout.right50,   nil, nil},
     {"Spotify",       nil, middleScreen,  hs.layout.right50, nil, nil},
     {"Slack",         nil, middleScreen,  hs.layout.left50, nil, nil},
+    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('Developer Tools'), rightScreen,   hs.layout.left30,   nil, nil},
+    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('InVision'), leftScreen,   hs.layout.left50,   nil, nil},
+    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('localhost'), leftScreen,   hs.layout.right50,   nil, nil},
   }
 
   hs.layout.apply(workLayout)
@@ -62,7 +60,6 @@ function applyMobileLayout()
 
     hs.layout.apply(mobileLayout)
   end
-
 
 end
 
