@@ -23,9 +23,9 @@ function applyWorkLayout()
 
   local workLayout = {
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
-    {"Adobe Photoshop CC 2018",  nil, leftScreen,   hs.layout.maximized,    nil, nil},
-    {"Adobe Illustrator CC 2018",  nil, middleScreen,   hs.layout.maximized,    nil, nil},
-    {"iTerm2",        nil, rightScreen, hs.layout.right70,   nil, nil},
+    {"Adobe Photoshop CC 2018",  nil, rightScreen,   hs.layout.maximized,    nil, nil},
+    {"Adobe Illustrator CC 2018",  nil, rightScreen,   hs.layout.maximized,    nil, nil},
+    {"iTerm2",        nil, middleScreen, hs.layout.maximized,   nil, nil},
     {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
     {"Mail",          nil, middleScreen,  hs.layout.left50,    nil, nil},
     {"Calendar",      nil, middleScreen,  hs.layout.right50,   nil, nil},
