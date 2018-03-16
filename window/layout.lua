@@ -25,15 +25,15 @@ function applyWorkLayout()
     {"Google Chrome", nil, leftScreen,   hs.layout.right50,   nil, nil},
     {"Adobe Photoshop CC 2018",  nil, rightScreen,   hs.layout.maximized,    nil, nil},
     {"Adobe Illustrator CC 2018",  nil, rightScreen,   hs.layout.maximized,    nil, nil},
-    {"iTerm2",        nil, middleScreen, hs.layout.maximized,   nil, nil},
-    {"Finder",        nil, middleScreen, hs.layout.left30,    nil, nil},
+    {"iTerm2",        nil, rightScreen, hs.layout.maximized,   nil, nil},
+    {"Finder",        nil, middleScreen, hs.layout.right50,    nil, nil},
     {"Mail",          nil, middleScreen,  hs.layout.left50,    nil, nil},
     {"Calendar",      nil, middleScreen,  hs.layout.right50,   nil, nil},
     {"Spotify",       nil, middleScreen,  hs.layout.right50, nil, nil},
     {"Slack",         nil, middleScreen,  hs.layout.left50, nil, nil},
     {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('Developer Tools'), rightScreen,   hs.layout.left30,   nil, nil},
-    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('InVision'), leftScreen,   hs.layout.left50,   nil, nil},
-    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('localhost'), leftScreen,   hs.layout.right50,   nil, nil},
+    {"InVision", nil, leftScreen,   hs.layout.left50,   nil, nil},
+    {"Github", nil, middleScreen,   hs.layout.right50,   nil, nil},
   }
 
   hs.layout.apply(workLayout)
