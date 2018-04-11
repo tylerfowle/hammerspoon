@@ -31,7 +31,7 @@ function applyWorkLayout()
     {"Calendar",      nil, middleScreen,  hs.layout.right50,   nil, nil},
     {"Spotify",       nil, middleScreen,  hs.layout.right50, nil, nil},
     {"Slack",         nil, middleScreen,  hs.layout.left50, nil, nil},
-    {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('Developer Tools'), rightScreen,   hs.layout.left30,   nil, nil},
+    -- {"Google Chrome", hs.appfinder.windowFromWindowTitlePattern('Developer Tools'), rightScreen,   hs.layout.left30,   nil, nil},
     {"InVision", nil, leftScreen,   hs.layout.left50,   nil, nil},
     {"Github", nil, middleScreen,   hs.layout.right50,   nil, nil},
   }
