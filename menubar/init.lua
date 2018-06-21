@@ -2,20 +2,53 @@
 -- temperature and the fan speed. The Space only updates if the space is changed
 -- with the Hammerspoon shortcut (option + arrows does not work). 
 ---------------------------------------------------------------------------
+
+function getSpotifyTrack()
+  spotty = hs.execute('spotify i|grep Track', true)
+  spotty = string.gsub(spotty, "\n", "")
+  return spotty
+end
+
+function getSpotifyArtist()
+  spotty = hs.execute('spotify i|grep Artist', true)
+  spotty = string.gsub(spotty, "\n", "")
+  return spotty
+end
+
+function getSpotifyAlbum()
+  spotty = hs.execute('spotify i|grep Album', true)
+  spotty = string.gsub(spotty, "\n", "")
+  return spotty
+end
+
 local function makeStatsMenu(calledFromWhere)
   if statsMenu == nil then
     statsMenu = hs.menubar.new()
   end
-  -- currentSpace = tostring(spaces.currentSpace())
-  currentSpace = tostring(spaces.currentSpace())
+
   defaultDevice = hs.audiodevice.defaultOutputDevice()
   defaultDeviceName = tostring(defaultDevice:name())
   defaultDeviceVolume = math.floor(defaultDevice:outputVolume())
-  statsMenu:setTitle("Space: " .. currentSpace .. " | " .. "Audio: " .. defaultDeviceName .. " | "  .. "Volume: " .. defaultDeviceVolume .. " | ")
+  separator = " │ "
+
+  statsMenu:setTitle(
+  getSpotifyTrack() ..
+  "  " ..
+  getSpotifyArtist() ..
+  "  " ..
+  getSpotifyAlbum() ..
+  separator ..
+  -- "Audio: " ..
+  -- defaultDeviceName ..
+  -- separator ..
+  "Volume: " ..
+  defaultDeviceVolume ..
+  separator
+  )
+
 end
 
 
--- print( spaces.debug.layout())
 
 
 
@@ -25,8 +58,4 @@ updateStatsInterval = 5
 statsMenuTimer = hs.timer.new(updateStatsInterval, makeStatsMenu)
 statsMenuTimer:start()
 
-currentSpace = tostring(spaces.currentSpace())
 makeStatsMenu()
-
-
-
