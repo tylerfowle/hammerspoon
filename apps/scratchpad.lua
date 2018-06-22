@@ -152,7 +152,7 @@ end
 
 function m.start()
   menu = hs.menubar.newWithPriority(m.cfg.menupriority)
-  menu:setTitle('[?]')
+  menu:setTitle('📝')
   menu:setMenu(menuClickCallback)
 
   chooser = hs.chooser.new(choiceCallback)

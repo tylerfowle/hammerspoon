@@ -1,15 +1,15 @@
 -- Makes (and updates) the topbar menu
 ---------------------------------------------------------------------------
 
-function getSpotifyInfo()
-  spotty = hs.execute('spotify i', true)
-  spotty = string.gsub(spotty, "\n", " ")
-  spotty = string.gsub(spotty, "Artist: ", "")
-  spotty = string.gsub(spotty, "Track: ", "")
-  spotty = string.gsub(spotty, "Album: ", "")
-  spotty = string.gsub(spotty, "   ", "")
-  spotty = string.gsub(spotty, "  ", " ")
-  return spotty
+local function spotifyStatus()
+  if hs.spotify.isPlaying == true
+  then
+    status = "▶️ "
+  else
+    status = "⏹ "
+  end
+
+  return status
 end
 
 local function makeStatsMenu(calledFromWhere)
@@ -23,7 +23,13 @@ local function makeStatsMenu(calledFromWhere)
   separator = " │ "
 
   statsMenu:setTitle(
-  getSpotifyInfo() ..
+  spotifyStatus() ..
+  " 🎤 "..
+  hs.spotify.getCurrentArtist() ..
+  " 🎵 "..
+  hs.spotify.getCurrentTrack() ..
+  " 💽 "..
+  hs.spotify.getCurrentAlbum() ..
   " 🔈 " ..
   defaultDeviceVolume ..
   separator
@@ -33,7 +39,7 @@ end
 
 -- How often to update Menubar
 ---------------------------------------------------------------------------
-updateStatsInterval = 30
+updateStatsInterval = 5
 statsMenuTimer = hs.timer.new(updateStatsInterval, makeStatsMenu)
 statsMenuTimer:start()
 

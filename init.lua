@@ -102,3 +102,20 @@ end
 
 -- scratchpad
 hs.hotkey.bind(hypershift, "n", hsm.scratchpad.toggle)
+
+
+
+-- default alert styles
+hs.alert.defaultStyle.strokeColor =  {white = 1, alpha = 0}
+hs.alert.defaultStyle.fillColor =  {white = 0.05, alpha = 0.75}
+hs.alert.defaultStyle.radius =  0
+hs.alert.defaultStyle.textFont = "Fira Code"
+hs.alert.defaultStyle.textSize = 14
+
+-- spotify info
+hs.hotkey.bind(hypershift, "p", function()
+  hs.spotify.displayCurrentTrack()
+end)
+
+local tabs = require "hs.tabs"
+tabs.enableForApp("iTerm2")
