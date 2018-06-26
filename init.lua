@@ -42,8 +42,65 @@ require("apps.chrome-tab-chooser")
 -- watchers
 require("watchers")
 
+
+
+hs.loadSpoon("SpoonInstall")
+Install=spoon.SpoonInstall
+Install.use_syncinstall = true
+
+Install:andUse("ClipboardTool",
+{
+  hotkeys = { toggle = { hypershift, ";" } },
+  start = true,
+}
+)
+
+Install:andUse("Seal",
+{
+  hotkeys = { show = { hypershift, "m" } },
+  fn = function(s)
+    s:loadPlugins({"apps", "calc", "safari_bookmarks", "screencapture", "useractions"})
+    s.plugins.safari_bookmarks.always_open_with_safari = false
+    s.plugins.useractions.actions =
+    {
+      ["Hammerspoon docs webpage"] = {
+        url = "http://hammerspoon.org/docs/",
+        icon = hs.image.imageFromName(hs.image.systemImageNames.ApplicationIcon),
+      },
+      ["SB old"] = {
+        url = "https://springboard.firespring.com/",
+        icon = 'favicon',
+      },
+      ["SB new"] = {
+        url = "https://my.firespring.com/website-selector",
+        icon = 'favicon',
+      },
+      ["SB old - dev"] = {
+        url = "http://springboard.firespring.test/",
+        icon = 'favicon',
+      },
+      ["SB new - dev"] = {
+        url = "https://accounts.firespring.test/",
+        icon = 'favicon',
+      },
+      ["localhost:3000"] = {
+        url = "http://localhost:3000/",
+        icon = 'favicon',
+      },
+      ["live"] = {
+        url = "http://localhost:3000/live.html",
+        icon = 'favicon',
+      },
+    }
+    s:refreshAllCommands()
+  end,
+  start = true,
+}
+)
+
 local LOGLEVEL = 'debug'
--- List of modules to load (found in modules/ dir)
+
+-- List of modules to load (found in apps/ dir)
 local modules = {
   'scratchpad',
 }
