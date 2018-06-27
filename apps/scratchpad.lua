@@ -151,7 +151,7 @@ function m.hide()
 end
 
 function m.start()
-  menu = hs.menubar.newWithPriority(m.cfg.menupriority)
+  menu = hs.menubar.new()
   menu:setTitle('📝')
   menu:setMenu(menuClickCallback)
 

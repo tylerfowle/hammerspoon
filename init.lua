@@ -50,7 +50,7 @@ Install.use_syncinstall = true
 
 Install:andUse("ClipboardTool",
 {
-  hotkeys = { toggle = { hypershift, ";" } },
+  bindHotkeys = { toggleClipboard = { hypershift, ";" } },
   start = true,
 }
 )
@@ -89,6 +89,10 @@ Install:andUse("Seal",
       },
       ["live"] = {
         url = "http://localhost:3000/live.html",
+        icon = 'favicon',
+      },
+      ["cdn"] = {
+        url = "https://github.com/firespring/fdp_cdn",
         icon = 'favicon',
       },
     }

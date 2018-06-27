@@ -1,46 +1,35 @@
 -- Makes (and updates) the topbar menu
 ---------------------------------------------------------------------------
 
-local function spotifyStatus()
-  if hs.spotify.isPlaying == true
-  then
-    status = "▶️ "
-  else
-    status = "⏹ "
-  end
+local menu = nil
+local updateInterval = 5
+local separator = " │ "
 
-  return status
-end
-
-local function makeStatsMenu(calledFromWhere)
-  if statsMenu == nil then
-    statsMenu = hs.menubar.new()
+local function setMenuTitle(calledFromWhere)
+  if menu == nil then
+    menu = hs.menubar.new()
   end
 
   defaultDevice = hs.audiodevice.defaultOutputDevice()
-  defaultDeviceName = tostring(defaultDevice:name())
   defaultDeviceVolume = math.floor(defaultDevice:outputVolume())
-  separator = " │ "
 
-  statsMenu:setTitle(
-  spotifyStatus() ..
-  " 🎤 "..
-  hs.spotify.getCurrentArtist() ..
-  " 🎵 "..
-  hs.spotify.getCurrentTrack() ..
-  " 💽 "..
-  hs.spotify.getCurrentAlbum() ..
-  " 🔈 " ..
-  defaultDeviceVolume ..
-  separator
-  )
-
+  if hs.spotify.isPlaying() then
+    menu:setTitle(
+    " 🎤 "..
+    hs.spotify.getCurrentArtist() ..
+    " 🎵 "..
+    hs.spotify.getCurrentTrack() ..
+    " 💽 "..
+    hs.spotify.getCurrentAlbum() ..
+    " 🔈 " ..
+    defaultDeviceVolume ..
+    separator
+    )
+  else
+    menu:setTitle("⏹ ")
+  end
 end
 
--- How often to update Menubar
----------------------------------------------------------------------------
-updateStatsInterval = 5
-statsMenuTimer = hs.timer.new(updateStatsInterval, makeStatsMenu)
+local statsMenuTimer = hs.timer.new(updateInterval, setMenuTitle)
 statsMenuTimer:start()
-
-makeStatsMenu()
+setMenuTitle()
