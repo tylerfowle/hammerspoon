@@ -50,7 +50,7 @@ Install.use_syncinstall = true
 
 Install:andUse("ClipboardTool",
 {
-  bindHotkeys = { toggleClipboard = { hypershift, ";" } },
+  hotkeys = { toggle_clipboard = { hypershift, "p" } },
   start = true,
 }
 )
@@ -164,8 +164,6 @@ end
 -- scratchpad
 hs.hotkey.bind(hypershift, "n", hsm.scratchpad.toggle)
 
-
-
 -- default alert styles
 hs.alert.defaultStyle.strokeColor =  {white = 1, alpha = 0}
 hs.alert.defaultStyle.fillColor =  {white = 0.05, alpha = 0.75}
@@ -174,7 +172,7 @@ hs.alert.defaultStyle.textFont = "Fira Code"
 hs.alert.defaultStyle.textSize = 14
 
 -- spotify info
-hs.hotkey.bind(hypershift, "p", function()
+hs.hotkey.bind(hypershift, "\\", function()
   hs.spotify.displayCurrentTrack()
 end)
 
