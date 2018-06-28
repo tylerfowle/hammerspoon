@@ -6,9 +6,6 @@ local updateInterval = 5
 local separator = " │ "
 
 local function setMenuTitle(calledFromWhere)
-  if menu == nil then
-    menu = hs.menubar.new()
-  end
 
   defaultDevice = hs.audiodevice.defaultOutputDevice()
   defaultDeviceVolume = math.floor(defaultDevice:outputVolume())
@@ -30,6 +27,9 @@ local function setMenuTitle(calledFromWhere)
   end
 end
 
+
+if menu then menu:delete() end
+menu = hs.menubar.new()
 local statsMenuTimer = hs.timer.new(updateInterval, setMenuTitle)
 statsMenuTimer:start()
 setMenuTitle()
