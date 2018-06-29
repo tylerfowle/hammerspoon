@@ -67,11 +67,11 @@ Install:andUse("Seal",
         url = "http://hammerspoon.org/docs/",
         icon = hs.image.imageFromName(hs.image.systemImageNames.ApplicationIcon),
       },
-      ["SB old"] = {
+      ["SB old - live"] = {
         url = "https://springboard.firespring.com/",
         icon = 'favicon',
       },
-      ["SB new"] = {
+      ["SB new - live"] = {
         url = "https://my.firespring.com/website-selector",
         icon = 'favicon',
       },
