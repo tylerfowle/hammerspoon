@@ -7,17 +7,34 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 -- hypershift + E,S,F,C
 
 
+scrollAmount = 1
 -- Scroll down 1 pixel
 hs.hotkey.bind(hypershift, "j", function()
-  local scroll = hs.eventtap.event.newScrollEvent({-1,-1},{},'pixel')
-  scroll:post()
+  print(scrollAmount)
+  hs.eventtap.event.newScrollEvent({0,(-1 * scrollAmount)},{},'pixel'):post()
 end)
 
 -- Scroll up 1 pixel
 hs.hotkey.bind(hypershift, "k", function()
-  local scroll = hs.eventtap.event.newScrollEvent({1,1},{},'pixel')
-  scroll:post()
+  print(scrollAmount)
+  hs.eventtap.event.newScrollEvent({0,(1 * scrollAmount)},{},'pixel'):post()
 end)
+
+
+-- Scroll down 1 pixel
+hs.hotkey.bind(hyper, "j", function()
+  scrollAmount = scrollAmount - 1
+  print(scrollAmount)
+end)
+
+-- Scroll up 1 pixel
+hs.hotkey.bind(hyper, "k", function()
+  scrollAmount = scrollAmount + 1
+  print(scrollAmount)
+end)
+
+
+
 
 
 
