@@ -7,6 +7,20 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 -- hypershift + E,S,F,C
 
 
+-- Scroll down 1 pixel
+hs.hotkey.bind(hypershift, "j", function()
+  local scroll = hs.eventtap.event.newScrollEvent({-1,-1},{},'pixel')
+  scroll:post()
+end)
+
+-- Scroll up 1 pixel
+hs.hotkey.bind(hypershift, "k", function()
+  local scroll = hs.eventtap.event.newScrollEvent({1,1},{},'pixel')
+  scroll:post()
+end)
+
+
+
 -- HOTKEYS
 ---------------------------------------------------------------------------
 -- apply window layout for current monitor configuration
