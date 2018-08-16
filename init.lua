@@ -175,6 +175,3 @@ hs.alert.defaultStyle.textSize = 14
 hs.hotkey.bind(hypershift, "\\", function()
   hs.spotify.displayCurrentTrack()
 end)
-
-local tabs = require "hs.tabs"
-tabs.enableForApp("iTerm2")
