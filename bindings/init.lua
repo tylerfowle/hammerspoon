@@ -126,3 +126,11 @@ end)
 hs.hotkey.bind(hyper,"space", function()
   tabSwitcher()
 end)
+
+-- xScope bindings
+hs.hotkey.bind(hypershift, "4", function()
+  hs.execute('hammerscope 21', true)
+end)
+hs.hotkey.bind(hypershift, "7", function()
+  hs.execute('hammerscope', true)
+end)
