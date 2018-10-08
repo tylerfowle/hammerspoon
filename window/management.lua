@@ -183,9 +183,9 @@ hs.hotkey.bind(hypershift, "G", function ()
   nextFullScreenStep()
 end)
 
-hs.hotkey.bind(hypershift, "T", function()
-  nextFocusScreenStep()
-end)
+-- hs.hotkey.bind(hypershift, "T", function()
+--   nextFocusScreenStep()
+-- end)
 
 hs.hotkey.bind(hyper, "i", function ()
   local win = hs.window.frontmostWindow()

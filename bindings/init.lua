@@ -7,6 +7,27 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 -- hypershift + E,S,F,C
 
 
+
+
+hs.hotkey.bind(hypershift, "t", function()
+  keys = ""
+  output = "inspect"
+  local ptMouse = hs.mouse.getAbsolutePosition()
+  local types = hs.eventtap.event.types
+  hs.eventtap.event.newMouseEvent(types.rightMouseDown, ptMouse, keys):post()
+  hs.eventtap.event.newMouseEvent(types.rightMouseUp, ptMouse, keys):post()
+
+  hs.timer.doAfter(.1, function()
+    hs.eventtap.keyStroke({},"i")
+    hs.eventtap.keyStroke({},"n")
+    hs.eventtap.keyStroke({},"return")
+  end)
+
+end)
+
+
+
+
 scrollAmount = 1
 -- Scroll down 1 pixel
 hs.hotkey.bind(hypershift, "j", function()
