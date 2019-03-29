@@ -12,12 +12,12 @@ local function setMenuTitle(calledFromWhere)
 
   if hs.spotify.isPlaying() then
     menu:setTitle(
-    " 🎤 "..
-    hs.spotify.getCurrentArtist() ..
-    " 🎵 "..
-    hs.spotify.getCurrentTrack() ..
-    " 💽 "..
-    hs.spotify.getCurrentAlbum() ..
+    -- " 🎤 "..
+    -- hs.spotify.getCurrentArtist() ..
+    -- " 🎵 "..
+    -- hs.spotify.getCurrentTrack() ..
+    -- " 💽 "..
+    -- hs.spotify.getCurrentAlbum() ..
     " 🔈 " ..
     defaultDeviceVolume ..
     separator
