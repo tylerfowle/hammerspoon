@@ -106,7 +106,6 @@ local LOGLEVEL = 'debug'
 
 -- List of modules to load (found in apps/ dir)
 local modules = {
-  'scratchpad',
 }
 
 -- global modules namespace (short for easy console use)
@@ -160,9 +159,6 @@ function hs_reload()
   hs.fnutils.each(hsm, stopModule)
   hs.reload()
 end
-
--- scratchpad
-hs.hotkey.bind(hypershift, "n", hsm.scratchpad.toggle)
 
 -- default alert styles
 hs.alert.defaultStyle.strokeColor =  {white = 1, alpha = 0}
