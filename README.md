@@ -1,4 +1,6 @@
-# hammerspoon
+# hammerspoon - WIP
 
+## Install
 
-## WIP
+1. `brew cask install hammerspoon`
+1. `git clone git@github.com:tylerfowle/hammerspoon.git ~/.hammerspoon`
