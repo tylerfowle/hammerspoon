@@ -8,7 +8,8 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 
 
 
-
+-- right click and inspect
+-- quickly open inspect - dev tools
 hs.hotkey.bind(hypershift, "t", function()
   keys = ""
   output = "inspect"
@@ -99,15 +100,15 @@ hs.hotkey.bind(hypershift, "i", function()
   spaces.createSpace()
 end)
 
--- focus one space left
-hs.hotkey.bind(hypershift, "w", function()
-  moveOneSpace("1")
-end)
+-- -- focus one space left
+-- hs.hotkey.bind(hypershift, "w", function()
+--   moveOneSpace("1")
+-- end)
 
--- focus one space right
-hs.hotkey.bind(hypershift, "r", function()
-  moveOneSpace("2")
-end)
+-- -- focus one space right
+-- hs.hotkey.bind(hypershift, "r", function()
+--   moveOneSpace("2")
+-- end)
 
 -- move focused widow one space left
 hs.hotkey.bind(hypershift, "h", function()
@@ -119,10 +120,10 @@ hs.hotkey.bind(hypershift, "l", function()
   moveWindowOneSpace("2")
 end)
 
--- activate mission control
-hs.hotkey.bind(hypershift, "b", function()
-  activateMissionControl()
-end)
+-- -- activate mission control
+-- hs.hotkey.bind(hypershift, "b", function()
+--   activateMissionControl()
+-- end)
 
 
 -- Other
