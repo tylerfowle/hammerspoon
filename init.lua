@@ -75,7 +75,7 @@ Install:andUse("Seal",
       },
 
       -- SBF github pull requests
-      ["workflow"] = {
+      ["pulls"] = {
         url = "https://github.com/firespring/sbf/pulls",
         icon = 'favicon',
       },
