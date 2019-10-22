@@ -1,4 +1,4 @@
-local sizes = {2, 3, 3/2}
+local sizes = {3/2, 2, 3, 6}
 local fullScreenSizes = {1, 3, 5.12}
 local focusScreenSizes = {1, 4/3, 2, 3}
 

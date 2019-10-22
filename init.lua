@@ -67,32 +67,40 @@ Install:andUse("Seal",
         url = "http://hammerspoon.org/docs/",
         icon = hs.image.imageFromName(hs.image.systemImageNames.ApplicationIcon),
       },
-      ["SB old - live"] = {
-        url = "https://springboard.firespring.com/",
+
+      -- SBF workflow docs
+      ["workflow"] = {
+        url = "https://github.com/firespring/sbf/blob/master/documentation/guides/processes/workflow.md",
         icon = 'favicon',
       },
-      ["SB new - live"] = {
-        url = "https://my.firespring.com/website-selector",
+
+      -- SBF github pull requests
+      ["workflow"] = {
+        url = "https://github.com/firespring/sbf/pulls",
         icon = 'favicon',
       },
-      ["SB old - dev"] = {
-        url = "http://springboard.firespring.test/",
+
+      -- Target Process Timesheet
+      ["timesheet"] = {
+        url = "https://sbf.tpondemand.com/Default/TimeSheet.aspx",
         icon = 'favicon',
       },
-      ["SB new - dev"] = {
-        url = "https://accounts.firespring.test/",
+
+      -- dev site
+      ["dev"] = {
+        url = "https://tyler-fowle.hq.sbf.engineering",
         icon = 'favicon',
       },
-      ["localhost:3000"] = {
-        url = "http://localhost:3000/",
-        icon = 'favicon',
-      },
+
+      -- live site
       ["live"] = {
-        url = "http://localhost:3000/live.html",
+        url = "https://www.stbaldricks.org/",
         icon = 'favicon',
       },
-      ["cdn"] = {
-        url = "https://github.com/firespring/fdp_cdn",
+
+      -- Github SBF
+      ["sbf"] = {
+        url = "https://github.com/firespring/sbf",
         icon = 'favicon',
       },
     }

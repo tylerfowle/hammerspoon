@@ -43,13 +43,15 @@ hs.hotkey.bind(hypershift, "k", function()
 end)
 
 
--- Scroll down 1 pixel
+-- Scroll amount +1
+-- add one pixel from the scrollAmount
 hs.hotkey.bind(hyper, "j", function()
   scrollAmount = scrollAmount - 1
   print(scrollAmount)
 end)
 
--- Scroll up 1 pixel
+-- Scroll amount -1
+-- remove one pixel from the scrollAmount
 hs.hotkey.bind(hyper, "k", function()
   scrollAmount = scrollAmount + 1
   print(scrollAmount)
