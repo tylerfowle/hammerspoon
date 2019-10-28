@@ -74,6 +74,12 @@ Install:andUse("Seal",
         icon = 'favicon',
       },
 
+      -- concourse
+      ["concourse"] = {
+        url = "https://concourse.3.srv.sbf.engineering",
+        icon = 'favicon',
+      },
+
       -- SBF github pull requests
       ["pulls"] = {
         url = "https://github.com/firespring/sbf/pulls",
