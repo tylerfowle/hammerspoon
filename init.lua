@@ -178,6 +178,7 @@ end
 hs.alert.defaultStyle.strokeColor =  {white = 1, alpha = 0}
 hs.alert.defaultStyle.fillColor =  {white = 0.05, alpha = 0.75}
 hs.alert.defaultStyle.radius =  0
+hs.alert.defaultStyle.textSize =  10
 
 -- spotify info
 hs.hotkey.bind(hypershift, "\\", function()
