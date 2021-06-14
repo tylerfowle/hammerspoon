@@ -11,7 +11,7 @@ hs.console.clearConsole()
 
 -- REQUIRES
 ---------------------------------------------------------------------------
-spaces = require("hs._asm.undocumented.spaces")
+-- spaces = require("hs._asm.undocumented.spaces")
 
 require("bindings.init")
 require("reload")
