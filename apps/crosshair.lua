@@ -8,7 +8,6 @@ crosshairObjectX = {}
 crosshairObjectY = {}
 
 function updateCrosshairs()
-
   -- Get the current co-ordinates of the mouse pointer
   mousepoint = hs.mouse.getAbsolutePosition()
   -- Prepare a big red circle around the mouse pointer
@@ -59,6 +58,23 @@ end
 
 -- crosshair timer - eats cpu!
 ---------------------------------------------------------------------------
--- updateCrosshairsInterval = 1
--- crosshairTimer = hs.timer.new(updateCrosshairsInterval, updateCrosshairs)
--- crosshairTimer:start()
+
+
+crosshairs_enabled = false
+hs.hotkey.bind(hypershift, "h", function()
+  if crosshairs_enabled == false then
+    updateCrosshairsInterval = .01
+    crosshairTimer = hs.timer.new(updateCrosshairsInterval, function()
+      clearCrosshairs()
+      updateCrosshairs()
+    end)
+    crosshairTimer:start()
+    crosshairs_enabled = true
+  else 
+    crosshairTimer:stop()
+    clearCrosshairs()
+    crosshairs_enabled = false
+  end
+
+
+end)

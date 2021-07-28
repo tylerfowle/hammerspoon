@@ -32,9 +32,6 @@ require("window.spaces.move-window")
 require("window.screens.move-window")
 require("window.screens.move-cursor")
 
--- menubar
-require("menubar")
-
 -- apps
 require("apps.crosshair")
 require("apps.chrome-tab-chooser")
@@ -52,8 +49,7 @@ Install:andUse("ClipboardTool",
 {
     hotkeys = { toggle_clipboard = { hypershift, "p" } },
     start = true,
-}
-)
+})
 
 Install:andUse("Seal",
 {
@@ -68,47 +64,36 @@ Install:andUse("Seal",
         icon = hs.image.imageFromName(hs.image.systemImageNames.ApplicationIcon),
       },
 
-      -- SBF workflow docs
-      ["workflow"] = {
-        url = "https://github.com/firespring/sbf/blob/master/documentation/guides/processes/workflow.md",
+       -- github pull requests
+      ["github"] = {
+        url = "https://github.com/CompanyCam/CraftMarketing",
         icon = 'favicon',
       },
 
-      -- concourse
-      ["concourse"] = {
-        url = "https://concourse.3.srv.sbf.engineering",
-        icon = 'favicon',
-      },
-
-      -- SBF github pull requests
+      -- github pull requests
       ["pulls"] = {
-        url = "https://github.com/firespring/sbf/pulls",
-        icon = 'favicon',
-      },
-
-      -- Target Process Timesheet
-      ["timesheet"] = {
-        url = "https://sbf.tpondemand.com/Default/TimeSheet.aspx",
+        url = "https://github.com/CompanyCam/CraftMarketing/pulls",
         icon = 'favicon',
       },
 
       -- dev site
       ["dev"] = {
-        url = "https://tyler-fowle.hq.sbf.engineering",
+        url = "https://cc.nitro",
+        icon = 'favicon',
+      },
+
+      -- staging site
+      ["stage"] = {
+        url = "https://stage.companycam.com",
         icon = 'favicon',
       },
 
       -- live site
       ["live"] = {
-        url = "https://www.stbaldricks.org/",
+        url = "https://companycam.com",
         icon = 'favicon',
       },
 
-      -- Github SBF
-      ["sbf"] = {
-        url = "https://github.com/firespring/sbf",
-        icon = 'favicon',
-      },
     }
     s:refreshAllCommands()
   end,
