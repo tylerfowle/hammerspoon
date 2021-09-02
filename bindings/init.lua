@@ -7,6 +7,62 @@ hypershift = {"cmd", "alt", "ctrl", "shift"}
 -- hypershift + E,S,F,C
 
 
+-- Custom Application Launcher Key
+leader = hs.hotkey.modal.new(hypershift, "a") 
+function leader:entered() hs.alert'Entered mode' end
+function leader:exited()  hs.alert'Exited mode'  end
+
+leader:bind('', 'escape', function() leader:exit() end)
+
+leader:bind("", "G", "Chrome", function()
+  hs.application.launchOrFocus("Google Chrome")
+  leader:exit() 
+end)
+leader:bind("", "C", "Chrome", function()
+  hs.application.launchOrFocus("Google Chrome")
+  leader:exit() 
+end)
+
+
+leader:bind("", "S", "Spotify", function()
+  hs.application.launchOrFocus("Spotify")
+  leader:exit() 
+end)
+
+leader:bind("", "V", "Docker Desktop", function()
+  hs.application.launchOrFocus("Visual Studio Code")
+  leader:exit() 
+end)
+
+leader:bind("", "D", "Docker Desktop", function()
+  hs.application.launchOrFocus("Docker Desktop")
+  leader:exit() 
+end)
+
+leader:bind("", "I", "iTerm", function()
+  hs.application.launchOrFocus("Iterm")
+  leader:exit() 
+end)
+leader:bind("", "T", "iTerm", function()
+  hs.application.launchOrFocus("Iterm")
+  leader:exit() 
+end)
+
+leader:bind("", "N", "Notes", function()
+  hs.application.launchOrFocus("Notes")
+  leader:exit() 
+end)
+leader:bind("", "V", "Notes", function()
+  hs.application.launchOrFocus("Notes")
+  leader:exit() 
+end)
+
+leader:bind("", "R", "Reminders", function()
+  hs.application.launchOrFocus("Reminders")
+  leader:exit() 
+end)
+
+
 
 -- right click and inspect
 -- quickly open inspect - dev tools
@@ -131,10 +187,10 @@ end)
 -- Other
 ---------------------------------------------------------------------------
 
--- display window hints
-hs.hotkey.bind(hypershift, "a", function()
-  hs.hints.windowHints()
-end)
+-- -- display window hints
+-- hs.hotkey.bind(hypershift, "a", function()
+--   hs.hints.windowHints()
+-- end)
 
 -- draw crosshair
 hs.hotkey.bind(hypershift, "z", function()
