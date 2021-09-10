@@ -15,15 +15,10 @@ function sleepCallback( eventType )
 		appDLM:kill()
 	end
 
-	local appDLM = hs.application.find("DisplayLinkUserAgent")
-	if(appDLM ~= nil) then
-		appDLM:kill()
-	end
 end
 sleepWatcher = hs.caffeinate.watcher.new(sleepCallback):start()
 
 
 function wakeCallback( eventType )
-	hs.application.launchOrFocus("DisplayLink Manager")
 end
 wakeWatcher = hs.caffeinate.watcher.new(wakeCallback):start()
